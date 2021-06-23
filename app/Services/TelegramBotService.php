@@ -3,38 +3,55 @@
 
 namespace App\Services;
 
-use BotMan\BotMan\BotMan;
-use BotMan\BotMan\BotManFactory;
-use BotMan\BotMan\Drivers\DriverManager;
-use BotMan\Drivers\Telegram\TelegramDriver;
+use App\Bot\Commands\BuyProductCommand;
+use App\Bot\Commands\ShowProductCommand;
+use App\Bot\Commands\StartCommand;
+use App\Models\Product;
+use WeStacks\TeleBot\Objects\Update;
+use WeStacks\TeleBot\TeleBot;
 
-class TelegramBotService
+class   TelegramBotService
 {
-    private BotMan $bot;
+    private const EMPTY_BUTTONS_DATA = 'none';
+
+    private TeleBot $bot;
+    private array $commands;
 
     public function __construct()
     {
-        DriverManager::loadDriver(\BotMan\Drivers\Telegram\TelegramDriver::class);
-        $this->bot = BotManFactory::create(config('services.botman'));
+        $this->commands = $this->getCommands();
+        $this->bot = new TeleBot([
+            'token' => config('telebot.bots.bot.token'),
+            'handlers' => array_values($this->commands),
+        ]);
     }
 
     public function handle()
     {
         $bot = $this->bot;
+        $bot->setWebhook(['url' => config('telebot.bots.bot.webhook.url')]);
+        $update = $bot->handleUpdate();
 
-        foreach ($this->getCommands() as $name => $command) {
-            $bot->hears($name, $command);
+        if ($update->is('callback_query')) {
+            $command = explode(' ', $update->callback_query->data)[0];
+
+            if ($command != self::EMPTY_BUTTONS_DATA) {
+                $this->callHandlerByCommand($command,  $update);
+            }
         }
+    }
 
-        $bot->listen();
+    private function callHandlerByCommand(string $command, Update $update): void
+    {
+        $this->bot->callHandler($this->commands[$command], $update, true);
     }
 
     private function getCommands(): array
     {
         return [
-            '/start' => function (BotMan $bot) {
-                $bot->reply(config('services.telegram.greeting'));
-            },
+            '/start' => StartCommand::class,
+            '/show' => ShowProductCommand::class,
+            '/buy' => BuyProductCommand::class,
         ];
     }
 }

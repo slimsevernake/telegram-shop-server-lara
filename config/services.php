@@ -33,11 +33,13 @@ return [
     'telegram' => [
         'token' => env('TELEGRAM_TOKEN'),
         'greeting' => "Hello there! This is the default greeting.",
+        'product_bought' => '✅ Success',
     ],
 
     'botman' => [
         'telegram' => [
             'token' => env('TELEGRAM_TOKEN'),
+            'hideInlineKeyboard' => false,
         ],
     ],
 
