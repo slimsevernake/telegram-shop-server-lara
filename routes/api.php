@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('bot/handle', 'App\Http\Controllers\TelegramBotController@handle')->name('telegram.bot.handle');
+Route::post('bot/handle', 'App\Http\Controllers\TelegramBotController@handle')->name('telegram.bot.handle');
