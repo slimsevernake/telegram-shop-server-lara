@@ -3,9 +3,9 @@
 
 namespace App\Modules\Bot\Services;
 
-use App\Bot\Commands\BuyProductCommand;
-use App\Bot\Commands\ShowProductCommand;
-use App\Bot\Commands\StartCommand;
+use App\Modules\Bot\Commands\BuyProductCommand;
+use App\Modules\Bot\Commands\ShowProductCommand;
+use App\Modules\Bot\Commands\StartCommand;
 use App\Models\Product;
 use WeStacks\TeleBot\Objects\Update;
 use WeStacks\TeleBot\TeleBot;

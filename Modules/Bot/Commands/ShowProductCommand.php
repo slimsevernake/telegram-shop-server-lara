@@ -32,6 +32,9 @@ class ShowProductCommand extends CommandHandler
         if (str_contains($text, self::$aliases[0])) {
             $id = $this->getIdFromCommand($text);
             $product = Product::whereKey($id)->first();
+            if (is_null($product)) {
+                return;
+            }
             $this->sendProduct($product);
         } elseif (str_contains($text, self::START_COMMAND)) {
             $product = Product::whereKey(1)->first();
