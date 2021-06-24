@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^6.0.0",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
+        "tymon/jwt-auth": "^1.0.2",
         "westacks/telebot": "^1.10"
     },
     "require-dev": {

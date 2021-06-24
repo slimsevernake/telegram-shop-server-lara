@@ -4,6 +4,7 @@
 namespace App\Modules\Bot\Commands;
 
 use WeStacks\TeleBot\Handlers\CommandHandler;
+use App\Models\Bot;
 
 class StartCommand extends CommandHandler
 {
@@ -25,7 +26,7 @@ class StartCommand extends CommandHandler
     public function handle()
     {
         $this->sendMessage([
-            'text' => config('services.telegram.greeting'),
+            'text' => Bot::first()->greeting,
         ]);
 
         $this->bot->callHandler(ShowProductCommand::class, $this->update, true);
