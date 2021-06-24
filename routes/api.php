@@ -3,19 +3,18 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::group([
+    'namespace' => 'App\Modules\Public\Http\Controllers'
+], base_path('Modules/Public/Routes/api.php'));
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group([
+    'as' => 'admin.',
+    'prefix' => 'admin',
+    'namespace' => 'App\Modules\Admin\Http\Controllers'
+], base_path('Modules/Admin/Routes/api.php'));
 
-Route::post('bot/handle', 'App\Http\Controllers\TelegramBotController@handle')->name('telegram.bot.handle');
+Route::group([
+    'as' => 'bot.',
+    'prefix' => 'bot',
+    'namespace' => 'App\Modules\Bot\Http\Controllers'
+], base_path('Modules/Bot/Routes/api.php'));

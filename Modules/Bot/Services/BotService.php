@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Modules\Bot\Services;
 
 use App\Bot\Commands\BuyProductCommand;
 use App\Bot\Commands\ShowProductCommand;
@@ -10,7 +10,7 @@ use App\Models\Product;
 use WeStacks\TeleBot\Objects\Update;
 use WeStacks\TeleBot\TeleBot;
 
-class   TelegramBotService
+class BotService
 {
     private const EMPTY_BUTTONS_DATA = 'none';
 

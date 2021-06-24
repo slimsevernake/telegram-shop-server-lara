@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Bot\Commands;
+namespace App\Modules\Bot\Commands;
 
 use App\Models\Product;
 use WeStacks\TeleBot\Handlers\CommandHandler;
